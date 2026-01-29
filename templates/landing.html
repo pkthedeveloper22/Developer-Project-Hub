@@ -1,0 +1,2033 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Development Portfolio | Django & Backend Projects</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        :root {
+            --bg-main: #e8e6e1;
+            --card-bg: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --text-muted: #999999;
+            --border: #d4d2cd;
+            --shadow-light: rgba(0, 0, 0, 0.08);
+            --shadow-medium: rgba(0, 0, 0, 0.12);
+            --shadow-strong: rgba(0, 0, 0, 0.16);
+            --accent: #2d2d2d;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 1.2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px var(--shadow-light);
+        }
+
+        .nav-container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            width: 100%;
+            margin: 0 auto;
+            padding: 6rem 2rem 4rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 3rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            width: 100%;
+            margin: 3rem auto 2rem;
+            padding: 0 2rem;
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 0.65rem 1.5rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            box-shadow: 0 2px 6px var(--shadow-light);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px var(--shadow-medium);
+        }
+
+        .search-box {
+            margin-top: 2rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.3s;
+            box-shadow: 0 2px 6px var(--shadow-light);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px var(--shadow-medium);
+        }
+
+        /* Projects Grid */
+        .projects-container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 2rem;
+            padding-bottom: 4rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        /* Project Card - Magazine Style */
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            box-shadow:
+                0 4px 12px var(--shadow-light),
+                0 8px 24px var(--shadow-light);
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow:
+                0 12px 32px var(--shadow-medium),
+                0 16px 48px var(--shadow-strong);
+        }
+
+        .project-header-section {
+            background: #f8f7f4;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .project-meta-top {
+            flex: 1;
+        }
+
+        .project-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-id {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-align: right;
+        }
+
+        .project-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 0.3rem;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .project-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .project-image-section {
+            position: relative;
+            height: 280px;
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+        }
+
+        .project-status {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px var(--shadow-medium);
+        }
+
+        .project-content {
+            padding: 1.8rem;
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-tag {
+            padding: 0.4rem 0.9rem;
+            background: #f8f7f4;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .project-footer {
+            padding: 1.2rem 1.8rem;
+            background: #f8f7f4;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .project-duration {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .difficulty {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .difficulty-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            margin-right: 0.3rem;
+            font-weight: 600;
+        }
+
+        .difficulty-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--border);
+        }
+
+        .difficulty-dot.filled {
+            background: var(--text-primary);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .project-link {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+        }
+
+        .project-link:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        /* Evaluation Section */
+        .evaluation {
+            margin: 1.5rem 1.8rem;
+            padding: 1.2rem;
+            background: #f8f7f4;
+            border-left: 3px solid var(--accent);
+            border-radius: 6px;
+        }
+
+        .evaluation h4 {
+            font-size: 0.8rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-primary);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .evaluation-item {
+            margin-bottom: 0.6rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .evaluation-item strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .score {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 1rem;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 10000;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 16px;
+            max-width: 1000px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            position: relative;
+            height: 350px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .modal-header::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 50%, var(--card-bg) 100%);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            z-index: 10;
+            border: 1px solid var(--border);
+        }
+
+        .close-modal:hover {
+            background: var(--accent);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 2.5rem;
+        }
+
+        .modal-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .modal-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        /* Enhanced Screenshots Grid - Supports 6+ images */
+        .screenshots {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .screenshot {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px var(--shadow-light);
+            overflow: hidden;
+        }
+
+        .screenshot::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0);
+            transition: background 0.3s;
+            z-index: 1;
+        }
+
+        .screenshot::after {
+            content: '\f065';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            color: white;
+            font-size: 2rem;
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 2;
+        }
+
+        .screenshot:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px var(--shadow-medium);
+        }
+
+        .screenshot:hover::before {
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .screenshot:hover::after {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        /* Full-Width Image Viewer */
+        .image-viewer {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 20000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .image-viewer.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .image-viewer-content {
+            position: relative;
+            max-width: 95vw;
+            max-height: 95vh;
+            animation: zoomIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .image-viewer img {
+            width: 100%;
+            height: auto;
+            max-height: 95vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .close-viewer {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            transition: all 0.3s;
+            border: 2px solid white;
+        }
+
+        .close-viewer:hover {
+            background: var(--accent);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .viewer-navigation {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            border: 2px solid white;
+        }
+
+        .viewer-navigation:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        .viewer-prev {
+            left: 20px;
+        }
+
+        .viewer-next {
+            right: 20px;
+        }
+
+        .viewer-counter {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1rem;
+            color: var(--text-primary);
+            letter-spacing: -0.3px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        .detail-list {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .detail-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .detail-list li::before {
+            content: '→';
+            color: var(--accent);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* Footer - Professional Multi-Column Layout */
+        footer {
+            width: 100%;
+            margin-top: 6rem;
+            padding: 0;
+            background: var(--card-bg);
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3.5rem 2rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .footer-section h3 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-about p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+            display: inline-block;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .footer-contact p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-contact i {
+            color: var(--text-muted);
+            width: 16px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding: 1.5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-bottom-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+
+        .footer-bottom-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+
+            .footer-main {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2.5rem;
+            }
+
+            .screenshots {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .nav-links {
+                gap: 1.2rem;
+                font-size: 0.85rem;
+            }
+
+            .filters {
+                justify-content: flex-start;
+                gap: 0.75rem;
+            }
+
+            .filter-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.75rem;
+            }
+
+            .hero,
+            .filter-section,
+            .projects-container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .project-title {
+                font-size: 1.5rem;
+            }
+
+            .project-header-section {
+                padding: 1.2rem;
+            }
+
+            .project-content {
+                padding: 1.5rem;
+            }
+
+            .project-footer {
+                padding: 1rem 1.5rem;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .evaluation {
+                margin: 1.2rem 1.5rem;
+                padding: 1rem;
+            }
+
+            .footer-main {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 2.5rem 1.5rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+                padding: 1.5rem;
+            }
+
+            .footer-bottom-links {
+                gap: 1.5rem;
+            }
+
+            .modal.active {
+                padding: 1rem;
+            }
+
+            .modal-content {
+                border-radius: 12px;
+            }
+
+            .modal-header {
+                height: 250px;
+            }
+
+            .modal-body {
+                padding: 1.5rem;
+            }
+
+            .modal-title {
+                font-size: 2rem;
+            }
+
+            .modal-subtitle {
+                font-size: 1rem;
+            }
+
+            .screenshots {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .screenshot {
+                height: 180px;
+            }
+
+            .viewer-navigation {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .viewer-prev {
+                left: 10px;
+            }
+
+            .viewer-next {
+                right: 10px;
+            }
+
+            .close-viewer {
+                top: -40px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .stat-label {
+                font-size: 0.75rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+            }
+
+            .nav-links {
+                gap: 0.8rem;
+            }
+
+            .project-title {
+                font-size: 1.3rem;
+            }
+
+            .project-image-section {
+                height: 220px;
+            }
+
+            .project-footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .difficulty {
+                order: -1;
+            }
+
+            .project-links {
+                margin-top: 0.5rem;
+            }
+
+            .modal-header {
+                height: 200px;
+            }
+
+            .modal-body {
+                padding: 1rem;
+            }
+
+            .modal-title {
+                font-size: 1.6rem;
+            }
+
+            .close-modal {
+                width: 36px;
+                height: 36px;
+                top: 1rem;
+                right: 1rem;
+            }
+
+            .screenshot {
+                height: 160px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">ProjectHub</div>
+            <ul class="nav-links">
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Development Projects</h1>
+        <p>A curated collection of Django and backend-focused projects, highlighting architecture, scalability, and
+            clean system design.</p>
+
+        <div class="hero-stats">
+            <div class="stat">
+                <div class="stat-number">08</div>
+                <div class="stat-label">Projects</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">12+</div>
+                <div class="stat-label">Technologies</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Production Ready</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="filter-section" id="projects">
+        <div class="filters">
+            <button class="filter-btn active" data-category="all">All Projects</button>
+            <button class="filter-btn" data-category="web">Web Apps</button>
+            <button class="filter-btn" data-category="ecommerce">E-Commerce</button>
+            <button class="filter-btn" data-category="management">Management</button>
+            <button class="filter-btn" data-category="ai">AI/ML</button>
+        </div>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search projects by name or technology...">
+        </div>
+    </section>
+
+    <!-- Projects Grid -->
+    <section class="projects-container">
+        <div class="projects-grid" id="projectsGrid">
+            <!-- Project 1: Modern Adidas E-Commerce -->
+            <div class="project-card" data-category="ecommerce web" data-id="1"
+                data-screenshots='["{% static 'images/adidas/screenshot-1.jpg' %}", "{% static 'images/adidas/screenshot-2.jpg' %}", "{% static 'images/adidas/screenshot-3.jpg' %}", "{% static 'images/adidas/screenshot-4.jpg' %}", "{% static 'images/adidas/screenshot-5.jpg' %}", "{% static 'images/adidas/screenshot-6.jpg' %}"]'>
+                <div class="project-header-section">
+                    <div class="project-meta-top">
+                        <div class="project-label">PRESENTATION</div>
+                        <h3 class="project-title">Modern Adidas<br>E-Commerce</h3>
+                        <p class="project-subtitle">Frontend Development</p>
+                    </div>
+                    <div class="project-id">[001]<br>DJANGO<br>PROJECT</div>
+                </div>
+                <div class="project-image-section"
+                    style="background-image: url('{% static 'images/adidas-system.jpg' %}');">
+                    <div class="project-status">COMPLETED</div>
+                </div>
+                <div class="project-content">
+                    <p class="project-description">
+                        Frontend e-commerce platform inspired by Adidas with secure authentication, dynamic product
+                        management, shopping cart functionality, and responsive Bootstrap UI.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Django</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Bootstrap</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">SQLite</span>
+                    </div>
+                </div>
+                <div class="project-footer">
+                    <div class="project-duration">
+                        <i class="far fa-clock"></i>
+                        <span>3 weeks</span>
+                    </div>
+                    <div class="difficulty">
+                        <span class="difficulty-label">Level</span>
+                        <div class="difficulty-dot filled"></div>
+                        <div class="difficulty-dot filled"></div>
+                        <div class="difficulty-dot"></div>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="project-link" title="Live Demo">
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="evaluation">
+                    <h4>Self-Evaluation</h4>
+                    <div class="evaluation-item">
+                        <strong>Key Concepts:</strong> User authentication, session management, CRUD operations, MVC
+                        architecture
+                    </div>
+                    <div class="evaluation-item">
+                        <strong>Challenge:</strong> Implementing secure payment flow simulation and cart persistence
+                    </div>
+                    <div class="evaluation-item">
+                        <strong>Improvement:</strong> Add real payment integration, implement wishlist with Redis
+                        caching
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="score">⭐ 8.5/10</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2: Blood Donor Management -->
+            <div class="project-card" data-category="management web" data-id="2"
+                data-screenshots='["{% static 'images/blood/Screenshot-1.png' %}", "{% static 'images/blood/Screenshot-2.png' %}", "{% static 'images/blood/Screenshot-3.png' %}", "{% static 'images/blood/Screenshot-4.png' %}", "{% static 'images/blood/Screenshot-5.png' %}", "{% static 'images/blood/Screenshot-6.png' %}"]'>
+                <div class="project-header-section">
+                    <div class="project-meta-top">
+                        <div class="project-label">PRESENTATION</div>
+                        <h3 class="project-title">Blood Donor<br>Management System</h3>
+                        <p class="project-subtitle">Healthcare Platform</p>
+                    </div>
+                    <div class="project-id">[002]<br>DJANGO<br>PROJECT</div>
+                </div>
+                <div class="project-image-section"
+                    style="background-image: url('{% static 'images/blood-system.jpg' %}');">
+                    <div class="project-status">COMPLETED</div>
+                </div>
+                <div class="project-content">
+                    <p class="project-description">
+                        Centralized hospital blood bank system with admin dashboard for managing donors, patients,
+                        doctors, blood requests, appointments, and system notifications with role-based access.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Django</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Authentication</span>
+                        <span class="tech-tag">REST API</span>
+                    </div>
+                </div>
+                <div class="project-footer">
+                    <div class="project-duration">
+                        <i class="far fa-clock"></i>
+                        <span>4 weeks</span>
+                    </div>
+                    <div class="difficulty">
+                        <span class="difficulty-label">Level</span>
+                        <div class="difficulty-dot filled"></div>
+                        <div class="difficulty-dot filled"></div>
+                        <div class="difficulty-dot filled"></div>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="project-link" title="Live Demo">
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="evaluation">
+                    <h4>Self-Evaluation</h4>
+                    <div class="evaluation-item">
+                        <strong>Key Concepts:</strong> Multi-role authentication, complex relationships, notification
+                        system, dashboard analytics
+                    </div>
+                    <div class="evaluation-item">
+                        <strong>Challenge:</strong> Managing multiple user roles with different permissions and
+                        workflows
+                    </div>
+                    <div class="evaluation-item">
+                        <strong>Improvement:</strong> Add SMS notifications, implement blood donation camps module
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="score">⭐ 9.0/10</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3: Bank Coaching Web App -->
+            <div class="project-card" data-category="web" data-id="3"
+                data-screenshots='["{% static 'images/bank/Screenshot-1.png' %}", "{% static 'images/bank/Screenshot-2.png' %}", "{% static 'images/bank/Screenshot-3.png' %}", "{% static 'images/bank/Screenshot-4.png' %}", "{% static 'images/bank/screenshot-5.jpg' %}", "{% static 'images/bank/screenshot-6.jpg' %}"]'>
+                <div class="project-header-section">
+                    <div class="project-meta-top">
+                        <div class="project-label">PRESENTATION</div>
+                        <h3 class="project-title">Bank Coaching<br>Web Application</h3>
+                        <p class="project-subtitle">Education Platform</p>
+                    </div>
+                    <div class="project-id">[003]<br>WEB<br>PROJECT</div>
+                </div>
+                <div class="project-image-section"
+                    style="background-image: url('{% static 'images/bank-system.jpg' %}');">
+                    <div class="project-status">COMPLETED</div>
+                </div>
+                <div class="project-content">
+                    <p class="project-description">
+                        Frontend-focused platform for bank exam coaching with client-side admin interface, responsive
+                        landing pages, and role-based page separation with reusable components.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">HTML/CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Bootstrap</span>
+                        <span class="tech-tag">Django</span>
+                    </div>
+                </div>
+                <div class="project-footer">
+                    <div class="project-duration">
+                        <i class="far fa-clock"></i>
+                        <span>2 weeks</span>
+                    </div>
+                    <div class="difficulty">
+                        <span class="difficulty-label">Level</span>
+                        <div class="difficulty-dot filled"></div>
+                        <div class="difficulty-dot filled"></div>
+                        <div class="difficulty-dot"></div>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="project-link" title="Live Demo">
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="evaluation">
+                    <h4>Self-Evaluation</h4>
+                    <div class="evaluation-item">
+                        <strong>Key Concepts:</strong> Component-based architecture, responsive design, UI/UX patterns
+                    </div>
+                    <div class="evaluation-item">
+                        <strong>Challenge:</strong> Creating reusable components for different page types
+                    </div>
+                    <div class="evaluation-item">
+                        <strong>Improvement:</strong> Add backend integration for course enrollment and payment
+                        processing
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="score">⭐ 7.5/10</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4: Goldmart E-Commerce -->
+            <div class="project-card" data-category="ecommerce web" data-id="4"
+                data-screenshots='["{% static 'images/goldmart/screenshot-1.jpg' %}", "{% static 'images/goldmart/screenshot-2.jpg' %}", "{% static 'images/goldmart/screenshot-3.jpg' %}", "{% static 'images/goldmart/screenshot-4.jpg' %}", "{% static 'images/goldmart/screenshot-5.jpg' %}", "{% static 'images/goldmart/screenshot-6.jpg' %}"]'>
+                <div class="project-header-section">
+                    <div class="project-meta-top">
+                        <div class="project-label">PRESENTATION</div>
+                        <h3 class="project-title">Goldmart<br>Jewelry Store</h3>
+                        <p class="project-subtitle">E-Commerce Platform</p>
+                    </div>
+                    <div class="project-id">[004]<br>ECOMMERCE<br>PROJECT</div>
+                </div>
+                <div class="project-image-section"
+                    style="background-image: url('{% static 'images/jewel-system.jpg' %}');">
+                    <div class="project-status">COMPLETED</div>
+                </div>
+                <div class="project-content">
+                    <p class="project-description">
+                        Responsive frontend e-commerce website for gold and jewelry store with clean UI, product
+                        listings, category sections, and modern shopping layout with cross-device responsiveness.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">HTML/CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Responsive</span>
+                        <span class="tech-tag">jQuery</span>
+                    </div>
+                </div>
+                <div class="project-footer">
+                    <div class="project-duration">
+                        <i class="far fa-clock"></i>
+                        <span>2 weeks</span>
+                    </div>
+                    <div class="difficulty">
+                        <span class="difficulty-label">Level</span>
+                        <div class="difficulty-dot filled"></div>
+                        <div class="difficulty-dot filled"></div>
+                        <div class="difficulty-dot"></div>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="project-link" title="Live Demo">
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="evaluation">
+                    <h4>Self-Evaluation</h4>
+                    <div class="evaluation-item">
+                        <strong>Key Concepts:</strong> Responsive design, image galleries, product filtering
+                    </div>
+                    <div class="evaluation-item">
+                        <strong>Challenge:</strong> Optimizing image loading for jewelry product photos
+                    </div>
+                    <div class="evaluation-item">
+                        <strong>Improvement:</strong> Add zoom functionality, implement 360° product view
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="score">⭐ 7.0/10</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 5: Smart College Management -->
+            <div class="project-card" data-category="management web" data-id="5"
+                data-screenshots='["{% static 'images/college/screenshot-1.jpg' %}", "{% static 'images/college/screenshot-2.jpg' %}", "{% static 'images/college/screenshot-3.jpg' %}", "{% static 'images/college/screenshot-4.jpg' %}", "{% static 'images/college/screenshot-5.jpg' %}", "{% static 'images/college/screenshot-6.jpg' %}", "{% static 'images/college/screenshot-7.jpg' %}", "{% static 'images/college/screenshot-8.jpg' %}"]'>
+                <div class="project-header-section">
+                    <div class="project-meta-top">
+                        <div class="project-label">PRESENTATION</div>
+                        <h3 class="project-title">Smart College<br>Management System</h3>
+                        <p class="project-subtitle">Education Management</p>
+                    </div>
+                    <div class="project-id">[005]<br>DJANGO<br>PROJECT</div>
+                </div>
+                <div class="project-image-section"
+                    style="background-image: url('{% static 'images/smart-college.jpg' %}');">
+                    <div class="project-status">COMPLETED</div>
+                </div>
+                <div class="project-content">
+                    <p class="project-description">
+                        Full-stack system for managing students, staff, courses, attendance, and admin tasks with secure
+                        role-based authentication and responsive UI for efficient college operations.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Django</span>
+                        <span class="tech-tag">MySQL</span>
+                        <span class="tech-tag">CRUD</span>
+                        <span class="tech-tag">Bootstrap</span>
+                    </div>
+                </div>
+                <div class="project-footer">
+                    <div class="project-duration">
+                        <i class="far fa-clock"></i>
+                        <span>5 weeks</span>
+                    </div>
+                    <div class="difficulty">
+                        <span class="difficulty-label">Level</span>
+                        <div class="difficulty-dot filled"></div>
+                        <div class="difficulty-dot filled"></div>
+                        <div class="difficulty-dot filled"></div>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="project-link" title="Live Demo">
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="evaluation">
+                    <h4>Self-Evaluation</h4>
+                    <div class="evaluation-item">
+                        <strong>Key Concepts:</strong> Complex data models, attendance tracking, reporting system,
+                        multi-user roles
+                    </div>
+                    <div class="evaluation-item">
+                        <strong>Challenge:</strong> Building scalable attendance system with bulk operations
+                    </div>
+                    <div class="evaluation-item">
+                        <strong>Improvement:</strong> Add automated report generation, mobile app integration
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="score">⭐ 9.0/10</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 6: Hygiene Products E-Commerce -->
+            <div class="project-card" data-category="ecommerce web" data-id="6"
+                data-screenshots='["{% static 'images/hygiene/screenshot-1.jpg' %}", "{% static 'images/hygiene/screenshot-2.jpg' %}", "{% static 'images/hygiene/screenshot-3.jpg' %}", "{% static 'images/hygiene/screenshot-4.jpg' %}", "{% static 'images/hygiene/screenshot-5.jpg' %}", "{% static 'images/hygiene/screenshot-6.jpg' %}"]'>
+                <div class="project-header-section">
+                    <div class="project-meta-top">
+                        <div class="project-label">PRESENTATION</div>
+                        <h3 class="project-title">Hygiene Products<br>E-Commerce</h3>
+                        <p class="project-subtitle">Shopping Platform</p>
+                    </div>
+                    <div class="project-id">[006]<br>ECOMMERCE<br>PROJECT</div>
+                </div>
+                <div class="project-image-section"
+                    style="background-image: url('{% static 'images/hygeine-system.jpg' %}');">
+                    <div class="project-status">COMPLETED</div>
+                </div>
+                <div class="project-content">
+                    <p class="project-description">
+                        Responsive platform for hygiene products with user registration, product search, wishlist,
+                        ratings, and recommendations. Features admin panel for user and product management.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Django</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Bootstrap</span>
+                        <span class="tech-tag">jQuery</span>
+                    </div>
+                </div>
+                <div class="project-footer">
+                    <div class="project-duration">
+                        <i class="far fa-clock"></i>
+                        <span>3 weeks</span>
+                    </div>
+                    <div class="difficulty">
+                        <span class="difficulty-label">Level</span>
+                        <div class="difficulty-dot filled"></div>
+                        <div class="difficulty-dot filled"></div>
+                        <div class="difficulty-dot"></div>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="project-link" title="Live Demo">
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="evaluation">
+                    <h4>Self-Evaluation</h4>
+                    <div class="evaluation-item">
+                        <strong>Key Concepts:</strong> Product recommendation engine, rating system, wishlist
+                        functionality
+                    </div>
+                    <div class="evaluation-item">
+                        <strong>Challenge:</strong> Implementing product recommendation algorithm based on user behavior
+                    </div>
+                    <div class="evaluation-item">
+                        <strong>Improvement:</strong> Add ML-based personalized recommendations, social sharing features
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="score">⭐ 8.0/10</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 7: Event Management System -->
+            <div class="project-card" data-category="management web" data-id="7"
+                data-screenshots='["{% static 'images/event/Screenshot-1.png' %}", "{% static 'images/event/Screenshot-2.png' %}", "{% static 'images/event/Screenshot-3.png' %}", "{% static 'images/event/Screenshot-4.png' %}", "{% static 'images/event/Screenshot-5.png' %}", "{% static 'images/event/Screenshot-6.png' %}"]'>
+                <div class="project-header-section">
+                    <div class="project-meta-top">
+                        <div class="project-label">PRESENTATION</div>
+                        <h3 class="project-title">Event Management<br>System</h3>
+                        <p class="project-subtitle">Event Platform</p>
+                    </div>
+                    <div class="project-id">[007]<br>DJANGO<br>PROJECT</div>
+                </div>
+                <div class="project-image-section"
+                    style="background-image: url('{% static 'images/event-system.jpg' %}');">
+                    <div class="project-status">COMPLETED</div>
+                </div>
+                <div class="project-content">
+                    <p class="project-description">
+                        Comprehensive event platform handling event creation, participant registration, scheduling, and
+                        user management with secure authentication and responsive admin dashboard.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Django</span>
+                        <span class="tech-tag">SQLite</span>
+                        <span class="tech-tag">Bootstrap</span>
+                        <span class="tech-tag">CRUD</span>
+                    </div>
+                </div>
+                <div class="project-footer">
+                    <div class="project-duration">
+                        <i class="far fa-clock"></i>
+                        <span>4 weeks</span>
+                    </div>
+                    <div class="difficulty">
+                        <span class="difficulty-label">Level</span>
+                        <div class="difficulty-dot filled"></div>
+                        <div class="difficulty-dot filled"></div>
+                        <div class="difficulty-dot filled"></div>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="project-link" title="Live Demo">
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="evaluation">
+                    <h4>Self-Evaluation</h4>
+                    <div class="evaluation-item">
+                        <strong>Key Concepts:</strong> Event scheduling, registration workflow, participant management,
+                        email notifications
+                    </div>
+                    <div class="evaluation-item">
+                        <strong>Challenge:</strong> Managing event capacity limits and waitlist functionality
+                    </div>
+                    <div class="evaluation-item">
+                        <strong>Improvement:</strong> Add calendar integration, payment processing for paid events
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="score">⭐ 8.5/10</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 8: AI Attendance System -->
+            <div class="project-card" data-category="ai management" data-id="8"
+                data-screenshots='["{% static 'images/ai/screenshot-1.jpg' %}", "{% static 'images/ai/screenshot-2.jpg' %}", "{% static 'images/ai/screenshot-3.jpg' %}", "{% static 'images/ai/screenshot-4.jpg' %}", "{% static 'images/ai/screenshot-5.jpg' %}", "{% static 'images/ai/screenshot-6.jpg' %}", "{% static 'images/ai/screenshot-7.jpg' %}"]'>
+                <div class="project-header-section">
+                    <div class="project-meta-top">
+                        <div class="project-label">PRESENTATION</div>
+                        <h3 class="project-title">AI Attendance<br>System</h3>
+                        <p class="project-subtitle">Machine Learning</p>
+                    </div>
+                    <div class="project-id">[008]<br>AI/ML<br>PROJECT</div>
+                </div>
+                <div class="project-image-section"
+                    style="background-image: url('{% static 'images/AI-system.jpg' %}');">
+                    <div class="project-status">COMPLETED</div>
+                </div>
+                <div class="project-content">
+                    <p class="project-description">
+                        Face recognition-based attendance tracking system using OpenCV and DeepFace with real-time
+                        detection, admin analytics dashboard, and automated attendance reports.
+                    </p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">OpenCV</span>
+                        <span class="tech-tag">DeepFace</span>
+                        <span class="tech-tag">Flask</span>
+                        <span class="tech-tag">AI/ML</span>
+                    </div>
+                </div>
+                <div class="project-footer">
+                    <div class="project-duration">
+                        <i class="far fa-clock"></i>
+                        <span>6 weeks</span>
+                    </div>
+                    <div class="difficulty">
+                        <span class="difficulty-label">Level</span>
+                        <div class="difficulty-dot filled"></div>
+                        <div class="difficulty-dot filled"></div>
+                        <div class="difficulty-dot filled"></div>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="project-link" title="Live Demo">
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="evaluation">
+                    <h4>Self-Evaluation</h4>
+                    <div class="evaluation-item">
+                        <strong>Key Concepts:</strong> Computer vision, face detection/recognition, real-time
+                        processing, model optimization
+                    </div>
+                    <div class="evaluation-item">
+                        <strong>Challenge:</strong> Optimizing face recognition accuracy under varying lighting
+                        conditions
+                    </div>
+                    <div class="evaluation-item">
+                        <strong>Improvement:</strong> Add mask detection, implement GPU acceleration for faster
+                        processing
+                    </div>
+                    <div class="evaluation-item">
+                        <span class="score">⭐ 9.5/10</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal" id="projectModal">
+        <div class="modal-content">
+            <div class="modal-header" id="modalHeader">
+                <div class="close-modal" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </div>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Full-Width Image Viewer -->
+    <div class="image-viewer" id="imageViewer">
+        <div class="image-viewer-content">
+            <div class="close-viewer" onclick="closeImageViewer()">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="viewer-navigation viewer-prev" onclick="navigateImage(-1)">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+            <img id="viewerImage" src="" alt="Screenshot">
+            <div class="viewer-navigation viewer-next" onclick="navigateImage(1)">
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="viewer-counter" id="viewerCounter">1 / 6</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-main">
+            <div class="footer-section footer-about">
+                <h3>About ProjectHub</h3>
+                <p>A curated portfolio showcasing professional Django and backend development projects with a focus on
+                    clean architecture, scalability, and modern design patterns.</p>
+                <div class="social-links">
+                    <a href="https://github.com/subinpk8088-pydj" class="social-link" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/subin-pk" class="social-link" title="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://wa.me/919496313744?text=Hi%20Subin%2C%0A%0AI%20came%20across%20your%20portfolio%20and%20would%20like%20to%20connect%20with%20you%20regarding%20development%20opportunities."
+                        class="social-link" title="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="mailto:subinpk8088@gmail.com?subject=Regarding%20Python%20Developer%20Opportunity&body=Hi%20Subin%2C%0D%0A%0D%0AI%20came%20across%20your%20profile%20and%20would%20like%20to%20connect."
+                        class="social-link" title="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#projects">All Projects</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="{% static 'docs/subin-pk.pdf' %}" target="_blank">Resume</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Categories</h3>
+                <ul class="footer-links">
+                    <li><a href="#" data-category="web">Web Apps</a></li>
+                    <li><a href="#" data-category="ecommerce">E-Commerce</a></li>
+                    <li><a href="#" data-category="management">Management</a></li>
+                    <li><a href="#" data-category="ai">AI/ML</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section footer-contact">
+                <h3>Get in Touch</h3>
+                <p><i class="fas fa-envelope"></i> subinsuresh8088@gmail.com</p>
+                <p><i class="fas fa-phone"></i> +91 9496313744</p>
+                <p><i class="fas fa-map-marker-alt"></i> Kannur, Kerala, India</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 ProjectHub. All rights reserved.</p>
+            <div class="footer-bottom-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Sitemap</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Global variables for image viewer
+        let currentImageArray = [];
+        let currentImageIndex = 0;
+        let currentProjectId = null;
+
+        // Filter functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+        const searchInput = document.getElementById('searchInput');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+
+                const category = btn.dataset.category;
+
+                projectCards.forEach(card => {
+                    if (category === 'all' || card.dataset.category.includes(category)) {
+                        card.style.display = 'block';
+                        setTimeout(() => {
+                            card.style.animation = 'fadeIn 0.5s ease backwards';
+                        }, 10);
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Search functionality
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+
+            projectCards.forEach(card => {
+                const title = card.querySelector('.project-title').textContent.toLowerCase();
+                const description = card.querySelector('.project-description').textContent.toLowerCase();
+                const techStack = Array.from(card.querySelectorAll('.tech-tag'))
+                    .map(tag => tag.textContent.toLowerCase())
+                    .join(' ');
+
+                const matches = title.includes(searchTerm) ||
+                    description.includes(searchTerm) ||
+                    techStack.includes(searchTerm);
+
+                card.style.display = matches ? 'block' : 'none';
+            });
+        });
+
+        // Modal functionality
+        const modal = document.getElementById('projectModal');
+        const modalHeader = document.getElementById('modalHeader');
+        const modalBody = document.getElementById('modalBody');
+
+        projectCards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                // Don't open modal if clicking on links
+                if (e.target.closest('.project-link')) {
+                    return;
+                }
+                const projectId = card.dataset.id;
+                openModal(projectId);
+            });
+        });
+
+        function openModal(projectId) {
+            // Get project data from card
+            const card = document.querySelector(`[data-id="${projectId}"]`);
+            currentProjectId = projectId;
+            
+            const title = card.querySelector('.project-title').textContent;
+            const description = card.querySelector('.project-description').textContent;
+            const bgImage = card.querySelector('.project-image-section').style.backgroundImage;
+            const techTags = Array.from(card.querySelectorAll('.tech-tag')).map(tag => tag.outerHTML).join('');
+            const evaluation = card.querySelector('.evaluation').innerHTML;
+
+            // Get screenshots from data attribute and store globally
+            const screenshotsAttr = card.dataset.screenshots;
+            currentImageArray = screenshotsAttr ? JSON.parse(screenshotsAttr) : [];
+
+            // Generate screenshot HTML with click handlers using data-index
+            let screenshotsHTML = '';
+            if (currentImageArray.length > 0) {
+                screenshotsHTML = currentImageArray.map((img, index) =>
+                    `<div class="screenshot" style="background-image: url('${img}')" data-index="${index}"></div>`
+                ).join('');
+            } else {
+                // Fallback to main image if no screenshots provided
+                screenshotsHTML = `
+                    <div class="screenshot" style="background-image: ${bgImage}" data-index="0"></div>
+                    <div class="screenshot" style="background-image: ${bgImage}" data-index="1"></div>
+                    <div class="screenshot" style="background-image: ${bgImage}" data-index="2"></div>
+                    <div class="screenshot" style="background-image: ${bgImage}" data-index="3"></div>
+                `;
+                currentImageArray = [bgImage, bgImage, bgImage, bgImage];
+            }
+
+            // Set modal header background
+            modalHeader.style.backgroundImage = bgImage;
+
+            // Set modal body content
+            modalBody.innerHTML = `
+                <h2 class="modal-title">${title}</h2>
+                <p class="modal-subtitle">${description}</p>
+                
+                <div class="tech-stack">
+                    ${techTags}
+                </div>
+                
+                <h3 class="section-title">Project Screenshots</h3>
+                <div class="screenshots">
+                    ${screenshotsHTML}
+                </div>
+                
+                <h3 class="section-title">Key Features</h3>
+                <ul class="detail-list">
+                    <li>User authentication and authorization system</li>
+                    <li>Responsive design for all devices</li>
+                    <li>Admin dashboard with analytics</li>
+                    <li>Database optimization and query efficiency</li>
+                    <li>RESTful API architecture</li>
+                </ul>
+                
+                <h3 class="section-title">Technical Details</h3>
+                <ul class="detail-list">
+                    <li><strong>Architecture:</strong> MVC pattern with Django framework</li>
+                    <li><strong>Database:</strong> PostgreSQL/MySQL with optimized queries</li>
+                    <li><strong>Security:</strong> CSRF protection, SQL injection prevention, secure authentication</li>
+                    <li><strong>Performance:</strong> Caching implemented, lazy loading for images</li>
+                </ul>
+                
+                <h3 class="section-title">Project Evaluation</h3>
+                <div class="evaluation">
+                    ${evaluation}
+                </div>
+            `;
+
+            // Add click handlers to screenshots after they're added to DOM
+            const screenshots = modalBody.querySelectorAll('.screenshot');
+            screenshots.forEach(screenshot => {
+                screenshot.addEventListener('click', function() {
+                    const index = parseInt(this.dataset.index);
+                    openImageViewer(index);
+                });
+            });
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            currentProjectId = null;
+        }
+
+        // Image Viewer Functions
+        function openImageViewer(index) {
+            const imageViewer = document.getElementById('imageViewer');
+            const viewerImage = document.getElementById('viewerImage');
+            const viewerCounter = document.getElementById('viewerCounter');
+
+            currentImageIndex = index;
+
+            // Set image source
+            viewerImage.src = currentImageArray[currentImageIndex];
+
+            // Update counter
+            viewerCounter.textContent = `${currentImageIndex + 1} / ${currentImageArray.length}`;
+
+            // Show viewer
+            imageViewer.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeImageViewer() {
+            const imageViewer = document.getElementById('imageViewer');
+            imageViewer.classList.remove('active');
+            // Don't restore scroll if modal is still open
+            if (!modal.classList.contains('active')) {
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function navigateImage(direction) {
+            const viewerImage = document.getElementById('viewerImage');
+            const viewerCounter = document.getElementById('viewerCounter');
+
+            // Calculate new index
+            currentImageIndex += direction;
+
+            // Loop around
+            if (currentImageIndex < 0) {
+                currentImageIndex = currentImageArray.length - 1;
+            } else if (currentImageIndex >= currentImageArray.length) {
+                currentImageIndex = 0;
+            }
+
+            // Update image
+            viewerImage.src = currentImageArray[currentImageIndex];
+
+            // Update counter
+            viewerCounter.textContent = `${currentImageIndex + 1} / ${currentImageArray.length}`;
+        }
+
+        // Close viewers on ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (document.getElementById('imageViewer').classList.contains('active')) {
+                    closeImageViewer();
+                } else if (modal.classList.contains('active')) {
+                    closeModal();
+                }
+            } else if (e.key === 'ArrowLeft' && document.getElementById('imageViewer').classList.contains('active')) {
+                navigateImage(-1);
+            } else if (e.key === 'ArrowRight' && document.getElementById('imageViewer').classList.contains('active')) {
+                navigateImage(1);
+            }
+        });
+
+        // Close modal on outside click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Close image viewer on outside click
+        document.getElementById('imageViewer').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('imageViewer')) {
+                closeImageViewer();
+            }
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
